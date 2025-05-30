@@ -59,46 +59,46 @@ const fs = require("fs");
 
 //
 
-function sum(a, b) {
-  return parseInt(a) + b; // to avoid the confusion when user gives string insted of integer
-}
+// function sum(a, b) {
+//   return parseInt(a) + b; // to avoid the confusion when user gives string insted of integer
+// }
 
-let x = sum("30", 40);
-console.log(x);
+// let x = sum("30", 40);
+// console.log(x);
 
-function sum2(n) {
-  let ans = 0;
-  let i = 0;
-  for (i; i <= n; i++) {
-    ans = ans + i;
-  }
-  return ans;
-}
+// function sum2(n) {
+//   let ans = 0;
+//   let i = 0;
+//   for (i; i <= n; i++) {
+//     ans = ans + i;
+//   }
+//   return ans;
+// }
 
-let ans = sum2(5);
-console.log(ans);
+// let ans = sum2(5);
+// console.log(ans);
 
 // I/O heavy operations - the operations which are doing alot of data transfer from the code and an external source
 // example - readingfiles,http request etc...
 // fs module is an example of i/o heavy operations
 
-const answer = fs.readFileSync(
-  "C:\\Users\\sun10\\Desktop\\COHORT 3.0\\COHORT-3.0\\Week1\\JavaScript\\example.txt",
-  "utf-8"
-); // now this is an I/O heavy task...
-console.log(answer);
+// const answer = fs.readFileSync(
+//   "C:\\Users\\sun10\\Desktop\\COHORT 3.0\\COHORT-3.0\\Week1\\JavaScript\\example.txt",
+//   "utf-8"
+// ); // now this is an I/O heavy task...
+// console.log(answer);
 
-const answer2 = fs.readFileSync(
-  "C:\\Users\\sun10\\Desktop\\COHORT 3.0\\COHORT-3.0\\Week1\\JavaScript\\b.txt",
-  "utf-8"
-);
-console.log(answer2);
+// const answer2 = fs.readFileSync(
+//   "C:\\Users\\sun10\\Desktop\\COHORT 3.0\\COHORT-3.0\\Week1\\JavaScript\\b.txt",
+//   "utf-8"
+// );
+// console.log(answer2);
 
-const answer3 = fs.readdirSync(
-  "C:\\Users\\sun10\\Desktop\\COHORT 3.0\\COHORT-3.0\\Week1\\JavaScript",
-  "utf-8"
-);
-console.log(answer3);
+// const answer3 = fs.readdirSync(
+//   "C:\\Users\\sun10\\Desktop\\COHORT 3.0\\COHORT-3.0\\Week1\\JavaScript",
+//   "utf-8"
+// );
+// console.log(answer3);
 
 // these all fgunction nread the files and folders synchronusly (readfilesync), this is I/O heavy and a loop is cpu heavy
 
@@ -109,17 +109,21 @@ console.log(answer3);
 fs.readFile(
   "C:\\Users\\sun10\\Desktop\\COHORT 3.0\\COHORT-3.0\\Week1\\JavaScript\\example.txt",
   "utf-8",
-  (content, error) => {
-    if (!error) console.log(content);
-    console.log(error);
+  (error, content) => {
+    if (error) console.log(error);
+    console.log(content);
   }
 ); // now this is an asynchronus operation  which will return the output based on the time one file is taking
 
 fs.readFile(
   "C:\\Users\\sun10\\Desktop\\COHORT 3.0\\COHORT-3.0\\Week1\\JavaScript\\b.txt",
   "utf-8",
-  (content, error) => {
-    if (!error) console.log(content);
-    console.log(error);
+  (error, content) => {
+    if (error) console.log(error);
+    console.log(content);
   }
 ); // the output will be based on first read file will be printed first
+
+// always give error first and then content it is the correct sequence for readFile....
+
+// ERROR FIRST CALLBACKS
