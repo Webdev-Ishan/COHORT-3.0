@@ -197,4 +197,87 @@ const fs = require("fs");
 // result = 6015
 
 
+// Normal JS assignment solutions....
 
+// function anagram(arg1, arg2) {
+//   if (arg1.length !== arg2.length) {
+//     return false;
+//   }
+//   // Convert strings to lowercase arrays, sort, and join back to string
+//   const sorted1 = arg1.toLowerCase().split('').sort().join('');
+//   const sorted2 = arg2.toLowerCase().split('').sort().join('');
+//   return sorted1 === sorted2;
+// }
+
+// console.log(anagram("Ishan", "Ihsan"));
+
+
+
+// function calculateTotalSpentByCategory(transactions) {
+
+//     if(transactions.length<=0){
+//         return false;
+//     }
+// 	let arr = [];
+
+// 	for(let i = 0; i < transactions.length; i++){
+// 		arr.push({category: transactions[i].category, price: transactions[i].price});
+// 	}
+
+
+//   return arr;
+// }
+
+// let ans = calculateTotalSpentByCategory([ {
+// 		id: 1,
+// 		timestamp: 1656076800000,
+// 		price: 10,
+// 		category: 'Food',
+// 		itemName: 'Pizza',
+// 	},
+//  {
+// 		id: 2,
+// 		timestamp: 1656076800000,
+// 		price: 20,
+// 		category: 'Food',
+// 		itemName: 'Burger',
+// 	}
+// ])
+
+// console.log(ans);
+
+//VOWELS
+
+// function countVowels(str) {
+//     // Your code here
+//     let count =0;
+//     let arr = ["A",'E','I','O','U','a','e','i','o','u']
+
+//     for(let i=0;i<str.length;i++){
+//         if(arr.includes(str[i])){
+//             count++;
+//         }
+//     }
+//     return count;
+// }
+
+// console.log(countVowels("Aekozffiooe"))
+
+
+//PALINDROME
+
+// function isPalindrome(str) {
+//     let newstr = str.toLowerCase()
+//     let str2="";
+//     for(let i=newstr.length-1; i >= 0;i--){
+//         str2= str2+newstr[i];
+//     }
+
+//     if(newstr==str2){
+//         return true;
+//     }
+
+//   return false;
+// }
+
+// console.log(isPalindrome("sCivic"))
