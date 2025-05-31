@@ -196,7 +196,6 @@ const fs = require("fs");
 
 // result = 6015
 
-
 // Normal JS assignment solutions....
 
 // function anagram(arg1, arg2) {
@@ -211,8 +210,6 @@ const fs = require("fs");
 
 // console.log(anagram("Ishan", "Ihsan"));
 
-
-
 // function calculateTotalSpentByCategory(transactions) {
 
 //     if(transactions.length<=0){
@@ -223,7 +220,6 @@ const fs = require("fs");
 // 	for(let i = 0; i < transactions.length; i++){
 // 		arr.push({category: transactions[i].category, price: transactions[i].price});
 // 	}
-
 
 //   return arr;
 // }
@@ -263,7 +259,6 @@ const fs = require("fs");
 
 // console.log(countVowels("Aekozffiooe"))
 
-
 //PALINDROME
 
 // function isPalindrome(str) {
@@ -282,40 +277,39 @@ const fs = require("fs");
 
 // console.log(isPalindrome("sCivic"))
 
-
 class calculator {
-    constructor(a, b) {
-        this.a = a;
-        this.b = b;
-        this.result = 0;
-    }
+  constructor(a, b) {
+    this.a = a;
+    this.b = b;
+    this.result = 0;
+  }
 
-    add(a = this.a, b = this.b) {
-        this.result = a + b;
-        return this.result;
-    }
+  add(a = this.a, b = this.b) {
+    this.result = a + b;
+    return this.result;
+  }
 
-    substract(a = this.a, b = this.b) {
-        this.result = a - b;
-        return this.result;
-    }
+  substract(a = this.a, b = this.b) {
+    this.result = a - b;
+    return this.result;
+  }
 
-    product(a = this.a, b = this.b) {
-        this.result = a * b;
-        return this.result;
-    }
+  product(a = this.a, b = this.b) {
+    this.result = a * b;
+    return this.result;
+  }
 
-    divide(a = this.a, b = this.b) {
-        if (b === 0) {
-            throw new Error("Division by zero");
-        }
-        this.result = a / b;
-        return this.result;
+  divide(a = this.a, b = this.b) {
+    if (b === 0) {
+      throw new Error("Division by zero");
     }
+    this.result = a / b;
+    return this.result;
+  }
 
-    output() {
-        return this.result;
-    }
+  output() {
+    return this.result;
+  }
 }
 
 let calc = new calculator(2, 3);

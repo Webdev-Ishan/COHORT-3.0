@@ -281,7 +281,7 @@ const fs = require("fs");
 // it uses the concept of promises under the hood and uses .then and keeps the thread free until the result is ready to serve
 
 const readFilepromise = () => {
-  return new Promise((resolve,reject) => {
+  return new Promise((resolve, reject) => {
     fs.readFile(
       "C:\\Users\\sun10\\Desktop\\COHORT 3.0\\COHORT-3.0\\Week1\\JavaScript\\b.txt",
       "utf-8",
@@ -307,5 +307,4 @@ let solve2 = async () => {
   }
 };
 
-
-solve2()
+solve2();
