@@ -281,3 +281,42 @@ const fs = require("fs");
 // }
 
 // console.log(isPalindrome("sCivic"))
+
+
+class calculator {
+    constructor(a, b) {
+        this.a = a;
+        this.b = b;
+        this.result = 0;
+    }
+
+    add(a = this.a, b = this.b) {
+        this.result = a + b;
+        return this.result;
+    }
+
+    substract(a = this.a, b = this.b) {
+        this.result = a - b;
+        return this.result;
+    }
+
+    product(a = this.a, b = this.b) {
+        this.result = a * b;
+        return this.result;
+    }
+
+    divide(a = this.a, b = this.b) {
+        if (b === 0) {
+            throw new Error("Division by zero");
+        }
+        this.result = a / b;
+        return this.result;
+    }
+
+    output() {
+        return this.result;
+    }
+}
+
+let calc = new calculator(2, 3);
+console.log(calc.add()); // Output: 5

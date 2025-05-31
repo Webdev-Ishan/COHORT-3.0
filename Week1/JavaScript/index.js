@@ -1,4 +1,4 @@
-// const fs = require("fs");
+const fs = require("fs");
 
 // the browser can only understand the HTML,CSS,Javscript and webassembly...
 // React and Nextjsd alsod elas with them only and application like google meet use web assembly...
@@ -158,46 +158,46 @@
 
 //Classes
 
-class Pokemon {
-  constructor(name, type, hp, xp) {
-    (this.name = name), (this.type = type), (this.hp = hp), (this.xp = xp); // this will give the current context.
-  }
+// class Pokemon {
+//   constructor(name, type, hp, xp) {
+//     (this.name = name), (this.type = type), (this.hp = hp), (this.xp = xp); // this will give the current context.
+//   }
 
-  attackdamage() {
-    return this.hp * 0.5;
-    //damage its attack will create to other pokemon
-  }
+//   attackdamage() {
+//     return this.hp * 0.5;
+//     //damage its attack will create to other pokemon
+//   }
 
-  defence() {
-    return this.xp - this.xp / 2;
-    // damage it will recive when attcked
-  }
+//   defence() {
+//     return this.xp - this.xp / 2;
+//     // damage it will recive when attcked
+//   }
 
-  warcry() {
-    console.log(`${this.name} is my favourite pokemon`);
-  }
-}
+//   warcry() {
+//     console.log(`${this.name} is my favourite pokemon`);
+//   }
+// }
 
-const pikachu = new Pokemon("Pikachu", "Electric", 200, 180); // new creates a new instance(object) of class pokemon
-let attack = pikachu.attackdamage();
-console.log(pikachu);
-console.log(attack);
-console.log(pikachu.name);
+// const pikachu = new Pokemon("Pikachu", "Electric", 200, 180); // new creates a new instance(object) of class pokemon
+// let attack = pikachu.attackdamage();
+// console.log(pikachu);
+// console.log(attack);
+// console.log(pikachu.name);
 // classes are used to create a structure fr creating  specific objects as objects are instances of classes..
 
 //pre-build classes in JS
 
 // Examples ---->
 
-let datetoday = new Date();
-console.log(datetoday.getMonth());
-console.log(datetoday.getFullYear());
+// let datetoday = new Date();
+// console.log(datetoday.getMonth());
+// console.log(datetoday.getFullYear());
 
-// OR
+// // OR
 
-let person = new Map();
-person.set("Name", "Ishan");
-console.log(person.get("Name"));
+// let person = new Map();
+// person.set("Name", "Ishan");
+// console.log(person.get("Name"));
 
 // strings array etc all are classes
 
@@ -215,17 +215,17 @@ console.log(person.get("Name"));
 //   console.log("Hello, world!");
 // });
 
-function resolveChecker(resolve) {
-  setTimeout(resolve, 3000);
-}
+// function resolveChecker(resolve) {
+//   setTimeout(resolve, 3000);
+// }
 
-function newPromise() {
-  return new Promise(resolveChecker);
-}
+// function newPromise() {
+//   return new Promise(resolveChecker);
+// }
 
-const ans = newPromise().then(() => {
-  console.log("Hello 2");
-});
+// const ans = newPromise().then(() => {
+//   console.log("Hello 2");
+// });
 
 //console.log(ans);
 
@@ -238,4 +238,74 @@ const ans = newPromise().then(() => {
 
 */
 
+// CALLBACK hell!!!
 
+// const settimeoutPromise = (delay) => {
+//   return new Promise((resolve) => {
+//     setTimeout(resolve, delay);
+//   });
+// };
+
+// settimeoutPromise(1000)
+//   .then(() => {
+//     console.log("1");
+//     return settimeoutPromise(3000)
+//   })
+//   .then(() => {
+//     console.log("2");
+//    return settimeoutPromise(5000);
+//   })
+//   .then(() => {
+//     console.log("3");
+
+//   });
+
+// Async-Await
+
+// let solve = async () => {
+//   try {
+//     await settimeoutPromise(1000);
+//     console.log("hi");
+//     await settimeoutPromise(2000);
+//     console.log("hello");
+//     await settimeoutPromise(4000);
+//     console.log("there");
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+// solve();
+// console.log("Last");
+
+// it uses the concept of promises under the hood and uses .then and keeps the thread free until the result is ready to serve
+
+const readFilepromise = () => {
+  return new Promise((resolve,reject) => {
+    fs.readFile(
+      "C:\\Users\\sun10\\Desktop\\COHORT 3.0\\COHORT-3.0\\Week1\\JavaScript\\b.txt",
+      "utf-8",
+      (err, data) => {
+        if (err) {
+          reject(err);
+        }
+        console.log(data);
+        resolve();
+      }
+    );
+  });
+};
+
+let solve2 = async () => {
+  try {
+    await readFilepromise();
+    console.log("REading1");
+    await readFilepromise();
+    console.log("REading2");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+solve2()
