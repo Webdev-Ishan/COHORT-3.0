@@ -39,8 +39,9 @@
 // let newdiv = document.createElement('h4')
 // newdiv.innerHTML = '3. This is new h4';
 // document.querySelector("body").appendChild(newdiv)
-
+let todos = [];
 let idn = 0;
+
 function updateTODO(id) {
   let ele = document.getElementById(id);
   let currentText = ele.childNodes[0].nodeValue.trim();
@@ -61,17 +62,31 @@ function updateTODO(id) {
 }
 
 function deleteTODO(id) {
-  let ele = document.getElementById(id);
-  ele.parentElement.removeChild(ele);
+  todos.splice(id, 1);
+  todocomponent();
 }
 
 function addTODO() {
-  let val = document.querySelector("input").value;
-  let div = document.createElement("div");
-  idn = idn + 1;
-  div.setAttribute("id", idn);
-  div.innerHTML = `${val} <button onClick="deleteTODO(${idn})">Delete<button/>  <button onClick="updateTODO(${idn})">Update<button/>`;
-
-  document.querySelector("body").appendChild(div);
+  todos.push({ title: document.querySelector("input").value });
   document.querySelector("input").value = "";
+  todocomponent();
+}
+
+function todocomponent() {
+  document.querySelector("#todo").innerHTML = "";
+
+  for (let i = 0; i < todos.length; i++) {
+    let div = document.createElement("div");
+    let h1 = document.createElement("h1");
+    let button = document.createElement("button");
+    div.setAttribute("id", i);
+    button.innerHTML = "Delete";
+    button.onclick = function () {
+      deleteTODO(i);
+    };
+    h1.innerHTML = todos[i].title;
+    div.appendChild(h1);
+    div.appendChild(button);
+    document.querySelector("#todo").appendChild(div);
+  }
 }
