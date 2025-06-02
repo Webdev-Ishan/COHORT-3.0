@@ -44,7 +44,8 @@ const TodoSchema = new mongoose.Schema({
     required: true,
   },
   deadline: {
-    type: Date,
+    type: String,
+    default:null
   },
 
   creator: {
