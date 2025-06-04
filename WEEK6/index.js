@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-const users = [{}];
+const users = [];
 
 app.get("/", (req, res) => {
   res.send("Working");
@@ -76,29 +76,35 @@ app.post("/signin", (req, res) => {
   }
 });
 
+app.get("/me", (req, res) => {
+  const token = req.cookies.token;
 
-app.get("/me",(req,res)=>{
-    const token = req.cookies.token;
-
-    if(!token){
-        return res.json({ success: false, message: "Token not found" });
+  if (!token) {
+    return res.json({ success: false, message: "Token not found" });
+  }
+  try {
+    let decode = jwt.verify(token, "secret");
+    if (!decode) {
+      return res.json({ success: false, message: "Token not found" });
     }
-    try {
 
-        let decode = jwt.verify(token,"secret");
-        if(!decode){
-            return res.json({ success: false, message: "Token not found" });
-        }
+    let userinfo = users.find((user) => user.password === decode.id);
 
-        let userinfo = users.find((user)=>user.password===decode.id )
-
-        return res.json({userinfo});
-        
-    } catch (error) {
-        return res.json({ success: false, message: error.message });
-    }
-})
+    return res.json({ userinfo });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+});
 
 app.listen(3000, () => {
   console.log("Server is running on 3000");
 });
+
+// @2nd part fo the WEEK - 6
+
+/*
+
+Just move the logic for decoding the token in a middleware and use it and then send the decoded data to the req.body
+to pass the control to the next code block
+
+*/
