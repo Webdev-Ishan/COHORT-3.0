@@ -18,7 +18,6 @@ const adminSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 6,
-      select: false, // do not return password by default
     },
     coursesMade: [
       {
