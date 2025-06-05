@@ -9,6 +9,22 @@ export const createController = async (req, res) => {
     return res.json({ success: false, message: "userid is required.." });
   }
 
+  const parsedBody = z
+    .object({
+      Title: z.string().min(5).max(50),
+      description: z.string().min(50).max(1000),
+    })
+    .strict();
+
+  const parsedbodySuccess = parsedBody.safeParse(req.body);
+
+  if (!parsedbodySuccess.success) {
+    return res.json({
+      success: false,
+      message: parsedbodySuccess.error.message,
+    });
+  }
+
   const { Title, description } = req.body;
 
   if (!Title || !description) {
@@ -45,3 +61,5 @@ export const createController = async (req, res) => {
     return res.json({ success: false, message: error.message });
   }
 };
+
+

@@ -215,9 +215,9 @@ export const updateController = async (req, res) => {
     return res.json({ success: false, message: "IDs not found" });
   }
 
-  const { title, description } = req.body;
+  const { Title, description } = req.body;
 
-  if (!title || !description) {
+  if (!Title || !description) {
     return res.json({ success: false, message: "Credentials not found" });
   }
 
@@ -234,15 +234,15 @@ export const updateController = async (req, res) => {
       return res.json({ success: false, message: "Course does not exist." });
     }
 
-    if (course.creator != exist._id) {
+    if (course.creator != req.userid) {
       return res.json({
         success: false,
         message: "You can only modify your own courses.",
       });
     }
 
-    if (course.Title != title) {
-      course.Title = title;
+    if (course.Title != Title) {
+      course.Title = Title;
     }
 
     if (course.description != description) {

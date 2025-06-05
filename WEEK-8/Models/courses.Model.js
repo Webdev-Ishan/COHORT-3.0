@@ -5,7 +5,6 @@ const courseSchema = new mongoose.Schema(
     Title: {
       type: String,
       required: true,
-      trim: true,
     },
     description: {
       type: String,
@@ -19,12 +18,10 @@ const courseSchema = new mongoose.Schema(
       },
     ],
 
-    creator: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Admin",
-      },
-    ],
+    creator: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Admin",
+    },
   },
   {
     timestamps: true,
