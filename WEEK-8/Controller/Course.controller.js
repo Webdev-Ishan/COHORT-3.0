@@ -9,9 +9,9 @@ export const createController = async (req, res) => {
     return res.json({ success: false, message: "userid is required.." });
   }
 
-  const { title, description } = req.body;
+  const { Title, description } = req.body;
 
-  if (!title || !description) {
+  if (!Title || !description) {
     return res.json({
       success: false,
       message: "All credentials is required..",
@@ -26,7 +26,7 @@ export const createController = async (req, res) => {
     }
 
     let course = new courseModel({
-      title,
+      Title,
       description,
       creator: exist._id,
     });
@@ -35,6 +35,10 @@ export const createController = async (req, res) => {
     if (!course) {
       return res.json({ success: false, message: "Something went wrong.." });
     }
+
+    await adminModel.findByIdAndUpdate(exist._id, {
+      $push: { coursesMade: course._id },
+    });
 
     return res.json({ success: true, course });
   } catch (error) {
