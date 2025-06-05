@@ -4,6 +4,7 @@ import connectTodb from "./Config/DB.js";
 import userRoutes from "./Routes/user.Routes.js";
 import adminRoutes from "./Routes/admin.Routes.js";
 import courseRoutes from "./Routes/course.Routes.js";
+import purchaseRoutes from "./Routes/purchase.Routes.js";
 import dotenv from "dotenv";
 dotenv.config();
 const app = express();
@@ -16,6 +17,7 @@ app.use(cookieParser());
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/course", courseRoutes);
+app.use("/api/purchase", purchaseRoutes);
 
 app.listen(port || 3000, () => {
   console.log("Server is running");
