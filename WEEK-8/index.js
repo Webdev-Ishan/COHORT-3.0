@@ -1,6 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import connectTodb from "./Config/DB.js";
+import userRoutes from "./Routes/user.Routes.js";
 import dotenv from "dotenv";
 dotenv.config();
 const app = express();
@@ -10,9 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.get("/", (req, res) => {
-  res.send("Working");
-});
+app.use("/api/user", userRoutes);
 
 app.listen(port || 3000, () => {
   console.log("Server is running");
