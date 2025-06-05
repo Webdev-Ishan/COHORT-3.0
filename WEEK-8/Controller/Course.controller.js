@@ -1,0 +1,43 @@
+import adminModel from "../Models/admin.Model.js";
+import userModel from "../Models/user.Model.js";
+import courseModel from "../Models/courses.Model.js";
+
+import { z } from "zod";
+
+export const createController = async (req, res) => {
+  if (!req.userid) {
+    return res.json({ success: false, message: "userid is required.." });
+  }
+
+  const { title, description } = req.body;
+
+  if (!title || !description) {
+    return res.json({
+      success: false,
+      message: "All credentials is required..",
+    });
+  }
+
+  try {
+    let exist = await adminModel.findById(req.userid);
+
+    if (!exist) {
+      return res.json({ success: false, message: "Admin does not exist." });
+    }
+
+    let course = new courseModel({
+      title,
+      description,
+      creator: exist._id,
+    });
+    await course.save();
+
+    if (!course) {
+      return res.json({ success: false, message: "Something went wrong.." });
+    }
+
+    return res.json({ success: true, course });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};

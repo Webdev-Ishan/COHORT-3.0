@@ -7,4 +7,11 @@ adminRouter.post("/signup", adminController.signupController);
 adminRouter.post("/login", adminController.loginController);
 adminRouter.get("/profile", authUsers, adminController.profileController);
 adminRouter.post("/logout", authUsers, adminController.logoutController);
+adminRouter.get("/allcourses", authUsers, adminController.allcoursesController);
+adminRouter.get(
+  "/allstudents",
+  authUsers,
+  adminController.allstudentsController
+);
+adminRouter.put("/update/:id", authUsers, adminController.updateController);
 export default adminRouter;

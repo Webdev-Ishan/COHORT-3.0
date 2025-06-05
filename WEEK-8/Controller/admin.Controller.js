@@ -1,4 +1,6 @@
 import adminModel from "../Models/admin.Model.js";
+import userModel from "../Models/user.Model.js";
+import courseModel from "../Models/courses.Model.js";
 import bcrypt from "bcrypt";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
@@ -151,6 +153,105 @@ export const logoutController = async (req, res) => {
     return res
       .status(200)
       .json({ success: true, message: "Logout successfull!!!" });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+export const allcoursesController = async (req, res) => {
+  if (!req.userid) {
+    return res.json({ success: false, message: "userid is required.." });
+  }
+
+  try {
+    let exist = await adminModel.findById(req.userid);
+
+    if (!exist) {
+      return res.json({ success: false, message: "Admin does not exist." });
+    }
+
+    let allcourses = await courseModel.find({ creator: exist._id });
+
+    if (!allcourses) {
+      return res.json({ success: false, message: "Something went wrong." });
+    }
+
+    return res.json({ success: true, allcourses });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+export const allstudentsController = async (req, res) => {
+  if (!req.userid) {
+    return res.json({ success: false, message: "userid is required.." });
+  }
+
+  try {
+    let exist = await adminModel.findById(req.userid);
+
+    if (!exist) {
+      return res.json({ success: false, message: "Admin does not exist." });
+    }
+
+    let allstudents = await courseModel
+      .find({ creator: exist._id })
+      .populate("studentEnrolled", "name");
+
+    if (!allstudents) {
+      return res.json({ success: false, message: "Something went wrong." });
+    }
+
+    return res.json({ success: true, allstudents });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+export const updateController = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id || !req.userid) {
+    return res.json({ success: false, message: "IDs not found" });
+  }
+
+  const { title, description } = req.body;
+
+  if (!title || !description) {
+    return res.json({ success: false, message: "Credentials not found" });
+  }
+
+  try {
+    let exist = await adminModel.findById(req.userid);
+
+    if (!exist) {
+      return res.json({ success: false, message: "Admin does not exist." });
+    }
+
+    let course = await courseModel.findById(id);
+
+    if (!course) {
+      return res.json({ success: false, message: "Course does not exist." });
+    }
+
+    if (course.creator != exist._id) {
+      return res.json({
+        success: false,
+        message: "You can only modify your own courses.",
+      });
+    }
+
+    if (course.Title != title) {
+      course.Title = title;
+    }
+
+    if (course.description != description) {
+      course.description = description;
+    }
+
+    await course.save();
+
+    return res.json({ success: true, message: "Course updated", course });
   } catch (error) {
     return res.json({ success: false, message: error.message });
   }
