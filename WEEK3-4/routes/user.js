@@ -4,11 +4,31 @@ const userMiddleware = require("../middleware/user.js");
 const { User } = require("../database/mongoose.js");
 const { Todo } = require("../database/mongoose.js");
 const jwt = require("jsonwebtoken");
+const { z } = require("zod");
+
 // User Routes
 router.post("/signup", async (req, res) => {
   // Implement user signup logic
-  const { name, email, password } = req.body;
 
+  const parsedbody = z
+    .object({
+      name: z.string().min(3).max(35),
+      email: z.string().max(100).email(),
+      password: z
+        .string()
+        .min(8)
+        .max(30)
+        .regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/, {
+          message: "Password must contain at least one letter and one number",
+        }),
+    })
+    .strict();
+  const parsedwithSuccess = parsedbody.safeParse(req.body);
+  if (!parsedwithSuccess.success) {
+    return res.json({ success: false, error: parsedwithSuccess.error });
+  }
+
+  const { name, email, password } = parsedwithSuccess.data;
   if (!name || !email || !password) {
     return res
       .status(400)
@@ -112,13 +132,12 @@ router.get("/todos", userMiddleware, async (req, res) => {
 router.post("/logout", userMiddleware, (req, res) => {
   // Implement logout logic
   try {
-    res.cookie("token","",{
+    res.cookie("token", "", {
       httpOnly: true,
       maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
       sameSite: "none", // Required for cross-origin cookies
-    })
-    return res.status(200).json({success:true,message:"Logout"})
-
+    });
+    return res.status(200).json({ success: true, message: "Logout" });
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message });
   }
