@@ -87,7 +87,10 @@ export const allpurchaseController = async (req, res) => {
       return res.json({ success: false, message: "User does not exist." });
     }
 
-    let allpurchase = await purchaseModel.find({ Sender: id });
+    let allpurchase = await purchaseModel
+      .find({ Sender: id })
+      .populate("courseId", "Title description")
+      .populate("Reciever", "name");
 
     if (!allpurchase) {
       return res.json({ success: false, message: "Something went wrong." });

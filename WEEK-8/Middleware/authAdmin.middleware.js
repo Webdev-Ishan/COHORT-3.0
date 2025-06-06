@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken";
 
-export const authUsers = async (req, resizeBy, next) => {
+export const authAdmins = async (req, resizeBy, next) => {
   if (!req.cookies.token) {
     return resizeBy.json({ success: false, message: "Token not found." });
   }
   try {
-    let decoded = jwt.verify(req.cookies.token, process.env.JWT_SECRET_USER);
+    let decoded = jwt.verify(req.cookies.token, process.env.JWT_SECRET_ADMIN);
     if (decoded.id) {
       req.userid = decoded.id;
     }

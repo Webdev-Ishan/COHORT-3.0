@@ -45,7 +45,7 @@ export const signupController = async (req, res) => {
     });
     await user.save();
 
-    let token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    let token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_USER, {
       expiresIn: "1d",
     });
 
@@ -103,7 +103,7 @@ export const loginController = async (req, res) => {
       return res.json({ success: false, message: "User does not exist." });
     }
 
-    let token = jwt.sign({ id: exist._id }, process.env.JWT_SECRET, {
+    let token = jwt.sign({ id: exist._id }, process.env.JWT_SECRET_USER, {
       expiresIn: "1d",
     });
 
