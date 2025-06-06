@@ -13,5 +13,6 @@ adminRouter.get(
   authUsers,
   adminController.allstudentsController
 );
-adminRouter.put("/update/:id", authUsers, adminController.updateController);
+adminRouter.put("/update/:id", authUsers, adminController.updateCourseController);
+adminRouter.put("/updateInfo",authUsers,adminController.updateInfoController);
 export default adminRouter;

@@ -234,7 +234,7 @@ export const updateController = async (req, res) => {
 
     await exist.save();
 
-    return res.json({ success: true, message: "Course updated", exist });
+    return res.json({ success: true, message: "Info updated", exist });
   } catch (error) {
     return res.json({ success: false, message: error.message });
   }
