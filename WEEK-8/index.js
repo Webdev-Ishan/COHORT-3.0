@@ -9,7 +9,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const app = express();
 const port = process.env.PORT;
-connectTodb();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -19,6 +19,14 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/course", courseRoutes);
 app.use("/api/purchase", purchaseRoutes);
 
-app.listen(port || 3000, () => {
-  console.log("Server is running");
-});
+(async () => {
+  try {
+    await connectTodb();
+    app.listen(port, () => {
+      console.log("Server is running");
+    });
+  } catch (error) {
+    console.error("Failed to connect to DB. Server not started.", error);
+    process.exit(1);
+  }
+})();
