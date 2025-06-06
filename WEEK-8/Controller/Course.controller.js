@@ -1,5 +1,6 @@
 import adminModel from "../Models/admin.Model.js";
 import courseModel from "../Models/courses.Model.js";
+import { v2 as cloudinary } from "cloudinary";
 
 import { z } from "zod";
 
@@ -12,7 +13,8 @@ export const createController = async (req, res) => {
     .object({
       Title: z.string().min(5).max(50),
       description: z.string().min(50).max(1000),
-      Price:z.string()
+      Price: z.string(),
+      Image: z.string(),
     })
     .strict();
 
@@ -25,9 +27,9 @@ export const createController = async (req, res) => {
     });
   }
 
-  const { Title, description,Price } = req.body;
+  const { Title, description, Price, Image } = req.body;
 
-  if (!Title || !description || !Price) {
+  if (!Title || !description || !Price || !Image) {
     return res.json({
       success: false,
       message: "All credentials is required..",
@@ -41,10 +43,15 @@ export const createController = async (req, res) => {
       return res.json({ success: false, message: "Admin does not exist." });
     }
 
+    const imageUpload = await cloudinary.uploader.upload(Image, {
+      resource_type: "image",
+    });
+
     let course = new courseModel({
       Title,
       description,
       Price,
+      image: imageUpload.url,
       creator: exist._id,
     });
     await course.save();

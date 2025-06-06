@@ -5,11 +5,13 @@ import userRoutes from "./Routes/user.Routes.js";
 import adminRoutes from "./Routes/admin.Routes.js";
 import courseRoutes from "./Routes/course.Routes.js";
 import purchaseRoutes from "./Routes/purchase.Routes.js";
+import cloudConfig from "./Config/Cloudinary.js";
 import dotenv from "dotenv";
 dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
+cloudConfig();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

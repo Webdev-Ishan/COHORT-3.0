@@ -174,7 +174,7 @@ export const allCourseController = async (req, res) => {
 
     return res.json({
       success: true,
-      exist,
+      courses: exist.coursesEnrolled,
     });
   } catch (error) {
     return res.json({ success: false, message: error.message });

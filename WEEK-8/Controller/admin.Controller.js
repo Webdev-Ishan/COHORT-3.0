@@ -1,5 +1,5 @@
 import adminModel from "../Models/admin.Model.js";
-import userModel from "../Models/user.Model.js";
+import { v2 as cloudinary } from "cloudinary";
 import courseModel from "../Models/courses.Model.js";
 import bcrypt from "bcrypt";
 import { z } from "zod";
@@ -217,10 +217,31 @@ export const updateCourseController = async (req, res) => {
     return res.json({ success: false, message: "IDs not found" });
   }
 
-  const { Title, description, Price } = req.body;
+  const parsedBody = z
+    .object({
+      Title: z.string().min(5).max(50),
+      description: z.string().min(50).max(1000),
+      Price: z.string(),
+      Image: z.string(),
+    })
+    .strict();
 
-  if (!Title || !description || !Price) {
-    return res.json({ success: false, message: "Credentials not found" });
+  const parsedbodySuccess = parsedBody.safeParse(req.body);
+
+  if (!parsedbodySuccess.success) {
+    return res.json({
+      success: false,
+      message: parsedbodySuccess.error.message,
+    });
+  }
+
+  const { Title, description, Price, Image } = req.body;
+
+  if (!Title || !description || !Price || !Image) {
+    return res.json({
+      success: false,
+      message: "All credentials is required..",
+    });
   }
 
   try {
@@ -243,6 +264,10 @@ export const updateCourseController = async (req, res) => {
       });
     }
 
+    const imageUpload = await cloudinary.uploader.upload(Image, {
+      resource_type: "image",
+    });
+
     if (course.Title != Title) {
       course.Title = Title;
     }
@@ -255,6 +280,10 @@ export const updateCourseController = async (req, res) => {
       course.Price = Price;
     }
 
+    if (course.image != imageUpload) {
+      course.image = imageUpload.url;
+    }
+
     await course.save();
 
     return res.json({ success: true, message: "Course updated", course });
@@ -262,7 +291,6 @@ export const updateCourseController = async (req, res) => {
     return res.json({ success: false, message: error.message });
   }
 };
-
 
 export const updateInfoController = async (req, res) => {
   if (!req.userid) {
