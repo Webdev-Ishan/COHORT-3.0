@@ -8,4 +8,5 @@ userRouter.post("/login", userController.loginController);
 userRouter.get("/profile", authUsers, userController.profileController);
 userRouter.post("/logout", authUsers, userController.logoutController);
 userRouter.get("/allcourses", authUsers, userController.allCourseController);
+userRouter.put("/updateInfo",authUsers,userController.updateController);
 export default userRouter;
