@@ -12,6 +12,7 @@ export const createController = async (req, res) => {
     .object({
       Title: z.string().min(5).max(50),
       description: z.string().min(50).max(1000),
+      Price:z.string()
     })
     .strict();
 
@@ -24,9 +25,9 @@ export const createController = async (req, res) => {
     });
   }
 
-  const { Title, description } = req.body;
+  const { Title, description,Price } = req.body;
 
-  if (!Title || !description) {
+  if (!Title || !description || !Price) {
     return res.json({
       success: false,
       message: "All credentials is required..",
@@ -43,6 +44,7 @@ export const createController = async (req, res) => {
     let course = new courseModel({
       Title,
       description,
+      Price,
       creator: exist._id,
     });
     await course.save();

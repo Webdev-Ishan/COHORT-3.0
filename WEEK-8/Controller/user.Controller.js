@@ -1,4 +1,5 @@
 import userModel from "../Models/user.Model.js";
+import courseModel from "../Models/courses.Model.js";
 import bcrypt from "bcrypt";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
@@ -151,6 +152,30 @@ export const logoutController = async (req, res) => {
     return res
       .status(200)
       .json({ success: true, message: "Logout successfull!!!" });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+export const allCourseController = async (req, res) => {
+  const id = req.userid;
+  if (!id) {
+    return res.json({ success: false, message: "userid is required.." });
+  }
+
+  try {
+    let exist = await userModel
+      .findById(id)
+      .populate("coursesEnrolled", "Title description");
+
+    if (!exist) {
+      return res.json({ success: false, message: "User does not exist." });
+    }
+
+    return res.json({
+      success: true,
+      exist,
+    });
   } catch (error) {
     return res.json({ success: false, message: error.message });
   }

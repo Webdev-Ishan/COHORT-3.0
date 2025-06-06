@@ -7,4 +7,5 @@ userRouter.post("/signup", userController.signupController);
 userRouter.post("/login", userController.loginController);
 userRouter.get("/profile", authUsers, userController.profileController);
 userRouter.post("/logout", authUsers, userController.logoutController);
+userRouter.get("/allcourses", authUsers, userController.allCourseController);
 export default userRouter;

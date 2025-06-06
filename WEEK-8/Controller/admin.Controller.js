@@ -170,7 +170,9 @@ export const allcoursesController = async (req, res) => {
       return res.json({ success: false, message: "Admin does not exist." });
     }
 
-    let allcourses = await courseModel.find({ creator: exist._id });
+    let allcourses = await courseModel
+      .find({ creator: exist._id })
+      .populate("studentEnrolled", "name,email");
 
     if (!allcourses) {
       return res.json({ success: false, message: "Something went wrong." });
@@ -215,9 +217,9 @@ export const updateController = async (req, res) => {
     return res.json({ success: false, message: "IDs not found" });
   }
 
-  const { Title, description } = req.body;
+  const { Title, description, Price } = req.body;
 
-  if (!Title || !description) {
+  if (!Title || !description || !Price) {
     return res.json({ success: false, message: "Credentials not found" });
   }
 
@@ -247,6 +249,10 @@ export const updateController = async (req, res) => {
 
     if (course.description != description) {
       course.description = description;
+    }
+
+    if (course.Price != Price) {
+      course.Price = Price;
     }
 
     await course.save();

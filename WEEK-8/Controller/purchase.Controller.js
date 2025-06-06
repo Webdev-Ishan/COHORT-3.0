@@ -41,6 +41,13 @@ export const purchaseController = async (req, res) => {
       return res.json({ success: false, message: "Admin do not exist." });
     }
 
+    if (paymentAmount != course.Price) {
+      return res.json({
+        success: false,
+        message: "Pleasae pay correct amount for course fees.",
+      });
+    }
+
     let purchase = new purchaseModel({
       paymentAmount,
       Sender: req.userid,
@@ -54,7 +61,39 @@ export const purchaseController = async (req, res) => {
       $push: { coursesEnrolled: course._id },
     });
 
+    await courseModel.findByIdAndUpdate(
+      id,
+      { $push: { studentEnrolled: exist._id } },
+      { new: true }
+    );
+
     return res.json({ success: true, message: "Payment is done" });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+export const allpurchaseController = async (req, res) => {
+  const id = req.userid;
+
+  if (!id) {
+    return res.json({ success: false, message: "Id not found." });
+  }
+
+  try {
+    let exist = await userModel.findById(id);
+
+    if (!exist) {
+      return res.json({ success: false, message: "User does not exist." });
+    }
+
+    let allpurchase = await purchaseModel.find({ Sender: id });
+
+    if (!allpurchase) {
+      return res.json({ success: false, message: "Something went wrong." });
+    }
+
+    return res.json({ success: true, allpurchase });
   } catch (error) {
     return res.json({ success: false, message: error.message });
   }

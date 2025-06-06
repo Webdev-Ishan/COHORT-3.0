@@ -10,7 +10,10 @@ const courseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
+    Price:{
+      type:String,
+      required:true
+    },
     studentEnrolled: [
       {
         type: mongoose.Schema.Types.ObjectId,
