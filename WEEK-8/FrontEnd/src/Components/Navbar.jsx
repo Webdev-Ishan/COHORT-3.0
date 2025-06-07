@@ -1,34 +1,51 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Menu from './Menu'
+import Menu from "./Menu";
 
 const Navbar = () => {
   return (
-    <nav className="w-full h-12 p-2  bg-gradient-to-r from-stone-100 to-stone-200 border-b-2 border-slate-700 duration-300 flex justify-around items-center gap-5">
+    <nav className="fixed top-0 left-0 w-full z-50 h-12 p-2  bg-gradient-to-r from-stone-100 to-stone-200 border-b-2 border-slate-700 duration-300 flex justify-center items-center gap-5">
       <div className="w-[30%] ">
-        <h1 className="text-xl font-bold font-serif bg-gradient-to-r from-sky-600 to-indigo-500 bg-clip-text text-transparent">TeachMint</h1>
+        <h1 className="text-xl font-bold font-serif text-blue-600">
+          TeachMint
+        </h1>
       </div>
 
       <div className="w-[60%] flex justify-evenly items-center gap-6 ">
-        <Link className="text-sm font-semibold bg-gradient-to-r from-slate-900 to-stone-500 bg-clip-text text-transparent hover:text-blue-600 duration-300" to={"/"}>
+        <Link
+          to={"/"}
+          className="text-sm font-semibold bg-gradient-to-r from-slate-900 to-stone-500 bg-clip-text text-transparent hover:text-blue-600 duration-300"
+        >
           Home
         </Link>
-        <Link className="text-sm font-semibold bg-gradient-to-r from-slate-900 to-stone-500 bg-clip-text text-transparent hover:text-blue-600 duration-300" to={"/"}>
+        <Link
+          to={"/About"}
+          className="text-sm font-semibold bg-gradient-to-r from-slate-900 to-stone-500 bg-clip-text text-transparent hover:text-blue-600 duration-300"
+        >
           About
         </Link>
-        <Link className="text-sm font-semibold bg-gradient-to-r from-slate-900 to-stone-500 bg-clip-text text-transparent hover:text-blue-600 duration-300" to={"/"}>
+        <Link
+          to={"/Login"}
+          className="text-sm font-semibold bg-gradient-to-r from-slate-900 to-stone-500 bg-clip-text text-transparent hover:text-blue-600 duration-300"
+        >
           Login
         </Link>
-        <Link className="text-sm font-semibold bg-gradient-to-r from-slate-900 to-stone-500 bg-clip-text text-transparent hover:text-blue-600 duration-300" to={"/"}>
+        <Link
+          to={"/Contact"}
+          className="text-sm font-semibold bg-gradient-to-r from-slate-900 to-stone-500 bg-clip-text text-transparent hover:text-blue-600 duration-300"
+        >
           Contact
         </Link>
-        <Link className="text-sm font-semibold bg-gradient-to-r from-slate-900 to-stone-500 bg-clip-text text-transparent hover:text-blue-600 duration-300" to={"/"}>
+        <Link
+          to={"/Signup"}
+          className="text-sm font-semibold bg-gradient-to-r from-slate-900 to-stone-500 bg-clip-text text-transparent hover:text-blue-600 duration-300"
+        >
           Signup
         </Link>
       </div>
-       
-    <Menu/>
-  
+      <div className="w-[10%] flex justify-center items-center">
+        <Menu />
+      </div>
     </nav>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function AccountDropdown3() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -33,22 +34,22 @@ export default function AccountDropdown3() {
   });
 
   return (
-    <section className="bg-gray-2 m-2 py-20 dark:bg-dark ">
+    <section className="bg-gray-2  py-20 dark:bg-dark ">
       <div className="container">
         <div className="flex justify-center ">
           <div className="relative inline-block ">
             <button
               ref={trigger}
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="mb-2 inline-flex h-8 items-center justify-center gap-2 rounded-lg border border-stroke bg-gradient-to-r from-sky-600 to-indigo-500 p-2 text-sm  font-medium  text-black "
+              className=" inline-flex h-6 items-center justify-center gap-2  p-2 text-xm font-bold   text-black "
             >
-              MENU
+              Menu
               <span
                 className={`duration-100 ${dropdownOpen ? "-scale-y-100" : ""}`}
               >
                 <svg
-                  width="20"
-                  height="20"
+                  width="10"
+                  height="10"
                   viewBox="0 0 20 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -74,40 +75,40 @@ export default function AccountDropdown3() {
                 </p>
               </div>
               <div>
-                <a
-                  href="#0"
+                <Link
+                  to={"/Profile"}
                   className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-black hover:bg-blue-600 hover:text-white duration-300"
                 >
                   View profile
-                </a>
-                <a
-                  href="#0"
+                </Link>
+                <Link
+                  to={"/settings"}
                   className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-black hover:bg-blue-600 hover:text-white duration-300"
                 >
                   Settings
-                </a>
+                </Link>
               </div>
               <div>
-                <a
-                  href="#0"
+                <Link
+                  href="/profile/Company"
                   className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-black hover:bg-blue-600 hover:text-white duration-300"
                 >
                   Company profile
-                </a>
-                <a
-                  href="#0"
+                </Link>
+                <Link
+                  href="/members"
                   className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-black hover:bg-blue-600 hover:text-white duration-300"
                 >
                   Team
-                </a>
+                </Link>
               </div>
               <div>
-                <a
-                  href="#0"
+                <Link
+                  href="/help"
                   className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-black hover:bg-blue-600 hover:text-white duration-300"
                 >
                   Support
-                </a>
+                </Link>
               </div>
               <div>
                 <button className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-black hover:bg-blue-600 hover:text-white duration-300">
