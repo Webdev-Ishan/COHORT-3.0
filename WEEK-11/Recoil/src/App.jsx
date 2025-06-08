@@ -1,52 +1,48 @@
-import React from "react";
-import { RecoilRoot, atom, useRecoilValue, useSetRecoilState } from "recoil";
-
-const val = atom({
-  key: "counter",
-  default: 0,
-});
+import React from 'react'
+import {useDispatch,useSelector} from 'react-redux'
+import {login,logout} from './slice.js'
 
 const App = () => {
-  return (
-    <RecoilRoot>
-      <Counter />
-    </RecoilRoot>
-  );
-};
 
-const Counter = () => {
+
   return (
     <div>
-      <div>
-        <Increase />
-        <Decrease />
-        <Current />
-      </div>
+      <Status />
+      
+    </div>
+  )
+}
+
+const Status = () => {
+  const isLoggedIn = useSelector((state) => state.login.login); // access state
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "40px" }}>
+      <h2>{isLoggedIn ? "✅ Logged In" : "❌ Logged Out"}</h2>
+      {isLoggedIn ? <Logout /> : <Login />}
     </div>
   );
 };
 
-const Increase = () => {
-  const setCount = useSetRecoilState(val);
-  return (
-    <div>
-      <button onClick={() => setCount((v) => v + 1)}>Increase</button>
-    </div>
-  );
-};
 
-const Decrease = () => {
-  const setCount = useSetRecoilState(val);
-  return (
-    <div>
-      <button onClick={() => setCount((v) => v - 1)}>Decrease</button>
-    </div>
-  );
-};
+const Login = ()=>{
+  const dispatch = useDispatch()
+  return(
+ <div>
+ <button onClick={()=>dispatch(login())} >Login</button>
+ </div>
+  )
+}
 
-const Current = () => {
-  const count = useRecoilValue(val);
-  return <div>{count}</div>;
-};
 
-export default App;
+const Logout = ()=>{
+  const dispatch = useDispatch()
+  return(
+ <div>
+<button onClick={()=>dispatch(logout())} >Logout</button>
+ </div>
+  )
+}
+
+export default App
+
