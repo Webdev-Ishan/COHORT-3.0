@@ -1,37 +1,54 @@
-import React, { useEffect, useState } from "react";
-
-const useFetch = function () {
-  const [post, setpost] = useState(null);
-
-  const fetchdata = async () => {
-    let response = await fetch("https://randomuser.me/api/");
-    let data = await response.json();
-
-    setpost(data);
-  };
-
-  useEffect(() => {
-    fetchdata();
-  }, []);
-
-  return {
-    post,
-    fetchdata,
-  };
-};
+import React, { useState } from "react";
+import { useFetch, usePrev, usePrevious } from "./Hooks";
 
 const App = () => {
-  const { post } = useFetch();
+  const { post, loading } = useFetch("https://randomuser.me/api/");
+  const { prev, fetchprev } = usePrev();
+  const [val, setval] = useState(0);
+  const value = usePrevious(val);
+
+  const showfetch = async () => {
+    console.log(prev);
+  };
+  if (loading) {
+    return <div>loading..</div>;
+  }
 
   return (
-   <div>
+    <div>
       {post && post.results && post.results[0] && (
         <div>
           {post.results[0].name.first} {post.results[0].name.last}
         </div>
       )}
+      <br />
+      <div>
+        <input type="file" onChange={fetchprev} />
+        <button type="submit" onSubmit={showfetch}>
+          Fetch
+        </button>
+      </div>
+
+      {prev && (
+        <div>
+          <button
+            onClick={() => {
+              setval((val) => {
+                val + 1;
+              });
+            }}
+          >
+            {value}
+          </button>
+        </div>
+      )}
+
+      <br />
+      <button onClick={() => setval((v) => v + 1)}>
+        Previous: {value}, Current: {val}
+      </button>
     </div>
-  )
+  );
 };
 
 export default App;
