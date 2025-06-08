@@ -53,3 +53,13 @@ export const usePrevious = (state) => {
 
   return prevref.current;
 };
+
+export const useDebounce = (og) => {
+  const clockref = useRef();
+  const fn = () => {
+    clearTimeout(clockref.current);
+    clockref.current = setTimeout(og, 2000);
+  };
+
+  return fn;
+};
