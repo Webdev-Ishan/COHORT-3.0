@@ -21,3 +21,22 @@ function fun1() {
   console.log("Hello");
 }
 fun2(fun1);
+
+//INTERFACE
+
+interface userType1 {
+  name: string;
+  age: number;
+}
+type userType2 = string | number
+
+function attend(user: userType1) {
+  console.log(`${user.age}`);
+}
+
+function attend2(user: userType2) {
+  console.log(user);
+}
+
+attend({ name: "Ishan", age: 20 });
+attend2(25)
