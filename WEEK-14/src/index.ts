@@ -1,3 +1,5 @@
+
+
 let x: number | string = 1;
 x = "Ishan";
 console.log(x);
@@ -126,6 +128,7 @@ console.log(randomUser);
 interface fire {
   type: string;
   hp: number;
+  moves: number[];
 }
 interface water {
   type: string;
@@ -141,3 +144,73 @@ function attack(user: fire | water) {
 }
 
 attack({ type: "fire", xp: 456 });
+
+let pikachu: fire = {
+  type: "Elctric",
+  hp: 234,
+  moves: [1, 2, 3, 4, 5], // arrays in typescript
+};
+console.log(pikachu);
+
+let arr: number[] = [1, 2, 3, 4, 5, 6];
+
+let ans = arr.filter((num) => num > 3);
+console.log(ans);
+
+//PICKS
+type usedInBattle = Pick<fire, "hp">;
+// here is use pick to extract some of the keys from a interface becuase i want to perform operations only on it and redeclaring them as type
+// will violtae the DRY principle...
+
+function pokebattle(stats: usedInBattle) {
+  console.log("I choose you");
+}
+pokebattle({ hp: 234 });
+
+// Partials make all the peoprties of an interface optional
+
+/*
+e.g.
+interface fire {
+  type?: string;
+  hp?: number;
+  moves?: number[];
+}
+
+*/
+
+//READONLY
+
+type student = {
+  readonly name: string;
+  readonly age: number;
+};
+
+let user1: student = {
+  name: "Ishan",
+  age: 24,
+};
+
+// user1.age=34 not allowed due to readonly
+
+// Records
+
+// this is an easier way to declrae the objects in typescript
+type shinobi = Record<string, { village: string; rank: string }>;
+
+let naruto: shinobi = {
+  naruto: {
+    village: "Konoha",
+    rank: "A",
+  },
+};
+
+console.log(naruto);
+
+// Exclude 
+
+// it lets you to exclude a value from the list e.g. some values from an interface for a specific function
+
+// Inheritance in ZOD
+
+// commands npm i express @types/express zod
