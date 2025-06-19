@@ -22,4 +22,8 @@ server.on("connection", (socket) => {
       }
     }
   });
+
+  socket.on("disconnect", () => {
+    allSocket = allSocket.filter((x) => x != socket);
+  });
 });
