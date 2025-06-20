@@ -2,28 +2,38 @@ import { WebSocketServer, WebSocket } from "ws";
 import dotenv from "dotenv";
 dotenv.config();
 
+interface User {
+  socket: WebSocket;
+  roomID: String;
+}
+
 const Port = process.env.PORT ? parseInt(process.env.PORT, 10) : 8080;
 const server = new WebSocketServer({ port: Port });
 
-let userCount = 0;
-let allSocket: WebSocket[] = [];
-server.on("connection", (socket) => {
-  userCount++;
-  allSocket.push(socket);
-  console.log("user Connected : ", userCount);
 
+let allSocket: User[] = [];
+server.on("connection", (socket) => {
   socket.on("message", (event) => {
-    console.log("User sent a message : ", event.toString());
-    for (let i = 0; i < allSocket.length; i++) {
-      if (allSocket[i] !== socket) {
-        setTimeout(() => {
-          allSocket[i].send(event.toString());
-        }, 1000);
+    let message = JSON.parse(event as unknown as string);
+    if (message.type === "join") {
+      allSocket.push({
+        socket,
+        roomID: message.payload.roomID,
+      });
+    }
+
+    if (message.type === "chat") {
+      let currentUserRoom = allSocket.find((x) => x.socket == socket)?.roomID;
+
+      for (let i = 0; i < allSocket.length; i++) {
+        if (allSocket[i].roomID == currentUserRoom) {
+          allSocket[i].socket.send(message.payload.message);
+        }
       }
     }
   });
 
   socket.on("disconnect", () => {
-    allSocket = allSocket.filter((x) => x != socket);
+    allSocket = allSocket.filter((x) => x.socket != socket);
   });
 });
