@@ -1,18 +1,30 @@
+import express from "express";
 import { Client } from "pg";
-const pgclient = new Client({
+import dotenv from "dotenv";
+import { signUp } from "./handler";
+dotenv.config();
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+export const pgclient = new Client({
   user: "neondb_owner",
-  password: "npg_Q6wqrAoWLk7h",
-  host: "ep-sparkling-king-a1oct7a9-pooler.ap-southeast-1.aws.neon.tech",
-  port: 5432,
+  password: process.env.NEON_PASSWORD,
+  host: process.env.NEON_HOST,
+  port: process.env.NEON_PORT ? parseInt(process.env.NEON_PORT, 10) : 5432,
   database: "neondb",
   ssl: true,
 });
 
+app.post("/signup", signUp);
+
 const main = async () => {
   await pgclient.connect();
-  console.log("Connected");
-  const response = await pgclient.query("UPDATE users set name='Manisha' WHERE name='Mannu';");
-  console.log(response);
+  console.log("Connected to PostgreSQL");
+
+  app.listen(3000, () => {
+    console.log("Server running on http://localhost:3000");
+  });
 };
 
 main();
