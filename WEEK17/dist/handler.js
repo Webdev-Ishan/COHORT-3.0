@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signUp = void 0;
+exports.Signin = exports.signUp = void 0;
 const app_1 = require("./app");
 const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, email } = req.body;
@@ -36,3 +36,34 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.signUp = signUp;
+const Signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email } = req.body;
+    if (!email) {
+        res.status(403).json({
+            success: false,
+            message: "Enter email please",
+        });
+    }
+    try {
+        let response = yield app_1.pgclient.query(`SELECT * FROM users WHERE email = $1`, [email]);
+        if (!response) {
+            res.status(403).json({
+                succes: false,
+                message: "SOmething went wrong",
+            });
+        }
+        res.status(200).json({
+            success: true,
+            user: response.rows[0],
+        });
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({
+                success: false,
+                message: error.message,
+            });
+        }
+    }
+});
+exports.Signin = Signin;
