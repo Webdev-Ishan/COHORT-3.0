@@ -31,6 +31,7 @@ exports.pgclient = new pg_1.Client({
 });
 app.post("/signup", handler_1.signUp);
 app.post("/signin", handler_1.Signin);
+app.post("/profile", handler_1.Profile);
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     yield exports.pgclient.connect();
     console.log("Connected to PostgreSQL");

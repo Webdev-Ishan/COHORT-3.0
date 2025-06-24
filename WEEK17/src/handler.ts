@@ -41,7 +41,7 @@ export const Signin: RequestHandler = async (req, res) => {
   }
 
   try {
-    await pgclient.query("BEGIN;");
+    // await pgclient.query("BEGIN;");
 
     let response = await pgclient.query(
       `SELECT * FROM users WHERE email = $1`,
@@ -53,12 +53,12 @@ export const Signin: RequestHandler = async (req, res) => {
     // })
     // process.exit(1);
 
-    await pgclient.query(`UPDATE users SET email = $1 WHERE email = $2`, [
-      "srishti@gmail.com",
-      response.rows[0].email,
-    ]);
+    // await pgclient.query(`UPDATE users SET email = $1 WHERE email = $2`, [
+    //   "srishti@gmail.com",
+    //   response.rows[0].email,
+    // ]);
 
-    await pgclient.query("COMMIT;");
+    // await pgclient.query("COMMIT;");
 
     if (!response) {
       res.status(403).json({
@@ -78,5 +78,45 @@ export const Signin: RequestHandler = async (req, res) => {
         message: error.message,
       });
     }
+  }
+};
+
+export const Profile: RequestHandler = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    res.status(403).json({
+      success: false,
+      message: "Input Not found",
+    });
+  }
+
+  try {
+    const response = await pgclient.query(
+      `SELECT users.name, adress.city
+      FROM users 
+      JOIN adress  ON users.id = adress.user_id
+         WHERE users.email = $1;`,
+      [email]
+    );
+    console.log(response);
+
+    if (!response) {
+      res.status(403).json({
+        success: false,
+        message: "SOmething went wrong",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      user: response.rows[0],
+    });
+  } catch (error) {
+    console.error("Signup Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
   }
 };

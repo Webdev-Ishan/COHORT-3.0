@@ -1,7 +1,7 @@
 import express from "express";
 import { Client } from "pg";
 import dotenv from "dotenv";
-import { signUp,Signin } from "./handler";
+import { signUp, Signin, Profile } from "./handler";
 dotenv.config();
 const app = express();
 app.use(express.json());
@@ -17,9 +17,8 @@ export const pgclient = new Client({
 });
 
 app.post("/signup", signUp);
-app.post("/signin",Signin);
-
-
+app.post("/signin", Signin);
+app.post("/profile", Profile);
 
 const main = async () => {
   await pgclient.connect();
