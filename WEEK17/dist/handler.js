@@ -45,7 +45,17 @@ const Signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     try {
+        yield app_1.pgclient.query("BEGIN;");
         let response = yield app_1.pgclient.query(`SELECT * FROM users WHERE email = $1`, [email]);
+        res.json({
+            message: "Unable to login becuase of transcation laws"
+        });
+        process.exit(1);
+        yield app_1.pgclient.query(`UPDATE users SET email = $1 WHERE email = $2`, [
+            "srishti@gmail.com",
+            response.rows[0].email,
+        ]);
+        yield app_1.pgclient.query("COMMIT;");
         if (!response) {
             res.status(403).json({
                 succes: false,

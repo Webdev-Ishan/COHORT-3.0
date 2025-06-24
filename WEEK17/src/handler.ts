@@ -41,10 +41,25 @@ export const Signin: RequestHandler = async (req, res) => {
   }
 
   try {
+    await pgclient.query("BEGIN;");
+
     let response = await pgclient.query(
       `SELECT * FROM users WHERE email = $1`,
       [email]
     );
+
+    // res.json({
+    //   message:"Unable to login becuase of transcation laws"
+    // })
+    // process.exit(1);
+
+    await pgclient.query(`UPDATE users SET email = $1 WHERE email = $2`, [
+      "srishti@gmail.com",
+      response.rows[0].email,
+    ]);
+
+    await pgclient.query("COMMIT;");
+
     if (!response) {
       res.status(403).json({
         succes: false,
