@@ -12,7 +12,7 @@ const response = await getBlogs();
 
 return(
     <div>
-        Hello guys whats up
+       
         {JSON.stringify(response)}
     </div>
 
