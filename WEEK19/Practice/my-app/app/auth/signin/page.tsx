@@ -34,7 +34,7 @@ export default function Signup() {
       if (response.data && response.data.success) {
         alert("User loggedin");
         console.log(response.data);
-        router.push("/");
+        router.push(`/auth/profile/${response.data.exist.id}`);
       } else {
         alert("Signup failed");
       }
