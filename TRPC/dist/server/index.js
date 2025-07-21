@@ -19,6 +19,10 @@ const todoinput = zod_1.default.object({
     title: zod_1.default.string(),
     content: zod_1.default.string(),
 });
+const authsignin = zod_1.default.object({
+    email: zod_1.default.string(),
+    password: zod_1.default.string(),
+});
 const appRouter = (0, trpc_1.router)({
     createTodo: trpc_1.publicProcedure.input(todoinput).mutation((opt) => __awaiter(void 0, void 0, void 0, function* () {
         const title = opt.input.title;
@@ -29,8 +33,22 @@ const appRouter = (0, trpc_1.router)({
             message: "Todo added",
         };
     })),
+    signUp: trpc_1.publicProcedure.input(authsignin).mutation((opt) => __awaiter(void 0, void 0, void 0, function* () {
+        const email = opt.input.email;
+        const password = opt.input.password;
+        const token = opt.ctx.username;
+        return {
+            token,
+        };
+    })),
 });
 const server = (0, standalone_1.createHTTPServer)({
     router: appRouter,
+    createContext(opts) {
+        let authHeader = opts.req.headers["authorization"];
+        return {
+            username: "IshanSaini",
+        };
+    },
 });
 server.listen(3000);

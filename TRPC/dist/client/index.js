@@ -22,9 +22,9 @@ const trpc = (0, client_1.createTRPCClient)({
 });
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        const response = yield trpc.createTodo.mutate({
-            title: "Go to gym",
-            content: "New split start",
+        const response = yield trpc.signUp.mutate({
+            email: "ishansaini0105@gmail.com",
+            password: "123123",
         });
         console.log(response);
     });
