@@ -16,7 +16,7 @@ async function main() {
     email: "ishansaini0105@gmail.com",
     password: "123123",
   });
-  console.log(response);
+  console.log(response.token);
 }
 
 main();
