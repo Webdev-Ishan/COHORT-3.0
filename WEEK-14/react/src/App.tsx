@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { trpc } from './utils/trpc';
 
 export default function App() {
@@ -62,7 +62,7 @@ export function IndexPage() {
 function Signup() {
   const userSignupMutate = trpc.user.signup.useMutation({
     onSuccess: (data) => {
-      let token = data.token;
+      const token = data.token;
       localStorage.setItem("token", token);
       window.location = "/";
     }
